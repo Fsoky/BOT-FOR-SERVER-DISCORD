@@ -19,7 +19,7 @@ https://github.com/Fsoky - GitHub автора
 
 
 
-01.04.2021 Fsoky Communty
+01.04.2021 Fsoky Community
 
 """
 
