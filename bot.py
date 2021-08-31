@@ -148,7 +148,7 @@ async def help(ctx):
 
 @bot.command(name="mute", brief="Запретить пользователю писать (настройте роль и канал)", usage="mute <member>")
 async def mute_user(ctx, member: discord.Member):
-	mute_role = discord.utils.get(ctx.messeaege.guild.roles, name="role name")
+	mute_role = discord.utils.get(ctx.message.guild.roles, name="role name")
 
 	await member.add_roles(mute_role)
 	await ctx.send(f"{ctx.author} gave role mute to {member}")
