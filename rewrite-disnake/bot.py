@@ -86,7 +86,7 @@ async def mute(ctx, member: disnake.Member, mute_time="5m"):
     mute_role = disnake.utils.get(ctx.message.guild.roles, id=config.MUTE_ROLE_ID)
 
     await member.add_roles(mute_role)
-    await ctx.send(f"{ctx.author.mention} был замучен на {mute_time}")
+    await ctx.send(f"{member.mention} был замучен на {mute_time}")
 
     if "s" or "" in mute_time:
         await asyncio.sleep(int(mute_time[:1]))
