@@ -1,3 +1,5 @@
+import asyncio
+
 import disnake
 from disnake.ext import commands
 
@@ -44,15 +46,15 @@ async def on_command_error(ctx, error):
         ))
 
 
-@bot.command(name="очистить", brief="Очистить чат от сообщений, по умолчанию 10.", usage="clear <amount=10>")
-@commands.has_permissions(manage_messages=True)
+@bot.command(name="очистить", aliases=["clear", "cls"], brief="Очистить чат от сообщений, по умолчанию 10.", usage="clear <amount=10>")
+@commands.has_permissions(administrator=True, manage_messages=True)
 async def clear(ctx, amount: int=10):
     await ctx.channel.purge(limit=amount + 1)
     await ctx.send(f"Было удалено {amount + 1} сообщений.", delete_after=3)
 
 
-@bot.command(name="кик", brief="Выгнать пользователя с сервера", usage="kick <@user> <reason=None>")
-@commands.has_permissions(kick_members=True)
+@bot.command(name="кик", aliases=["kick", "kick-member"], brief="Выгнать пользователя с сервера", usage="kick <@user> <reason=None>")
+@commands.has_permissions(administrator=True, kick_members=True)
 async def kick(ctx, member: disnake.Member, *, reason=None):
     await ctx.message.delete()
 
@@ -60,8 +62,8 @@ async def kick(ctx, member: disnake.Member, *, reason=None):
     await member.kick(reason=reason)
 
 
-@bot.command(name="бан", brief="Забанить пользователя на сервере", usage="ban <@user> <reason=None>")
-@commands.has_permissions(ban_members=True)
+@bot.command(name="бан", aliases=["ban", "ban-member"], brief="Забанить пользователя на сервере", usage="ban <@user> <reason=None>")
+@commands.has_permissions(administrator=True, ban_members=True)
 async def ban(ctx, member: disnake.Member, *, reason=None):
     await ctx.message.delete()
 
@@ -69,17 +71,20 @@ async def ban(ctx, member: disnake.Member, *, reason=None):
     await member.ban(reason=reason)
 
 
-@bot.command(name="разбанить", brief="Разбанить пользователя на сервере", usage="unban <user_id>")
-@commands.has_permissions(ban_members=True)
+@bot.command(name="разбанить", aliases=["unban", "unban-member"], brief="Разбанить пользователя на сервере", usage="unban <user_id>")
+@commands.has_permissions(administrator=True, ban_members=True)
 async def unban(ctx, user_id: int):
     user = await bot.fetch_user(user_id)
     await ctx.guild.unban(user)
 
+    await ctx.send("Участник разбанен")
 
-@bot.command(name="мут", brief="Запретить пользователю отправлять сообщения, стандарт 5 минут.", usage="mute <member> <time (s, h, d)=5m>")
-@commands.has_permissions(mute_members=True)
+
+@bot.command(name="мут", aliases=["mute", "mute-member"], brief="Запретить пользователю отправлять сообщения, стандарт 5 минут.", usage="mute <member> <time (s, h, d)=5m>")
+@commands.has_permissions(administrator=True, mute_members=True, manage_roles=True)
 async def mute(ctx, member: disnake.Member, mute_time="5m"):
     mute_role = disnake.utils.get(ctx.message.guild.roles, id=config.MUTE_ROLE_ID)
+
     await member.add_roles(mute_role)
     await ctx.send(f"{ctx.author.mention} был замучен на {mute_time}")
 
@@ -92,7 +97,7 @@ async def mute(ctx, member: disnake.Member, mute_time="5m"):
     elif "d" in mute_time:
         await asyncio.sleep(int(mute_time[:1]) * 60*60 * 24)
 
-    await memeber.remove_roles(mute_role)
+    await member.remove_roles(mute_role)
 
 
 @bot.command()
