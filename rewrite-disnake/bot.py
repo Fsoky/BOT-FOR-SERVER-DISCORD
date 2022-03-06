@@ -1,7 +1,7 @@
-import asyncio
-
 import disnake
 from disnake.ext import commands
+
+import config
 
 bot = commands.Bot(command_prefix=".", help_command=None, intents=disnake.Intents.all())
 
