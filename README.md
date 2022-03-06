@@ -6,6 +6,7 @@
 ## Установка 🎈
 ```
 $ git clone https://github.com/Fsoky/BOT-FOR-SERVER-DISCORD.git
+$ cd BOT-FOR-SERVER-DISCORD
 $ cd rewrite-disnake
 $ pip install -r requirements.txt
 ```
