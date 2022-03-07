@@ -89,14 +89,15 @@ async def mute(ctx, member: disnake.Member, mute_time="5m"):
     await ctx.send(f"{member.mention} был замучен на {mute_time}")
 
     if "s" or "" in mute_time:
-        await asyncio.sleep(int(mute_time[:1]))
+        mute_time = int(mute_time[:1])
     elif "m" in mute_time:
-        await asyncio.sleep(int(mute_time[:1]) * 60)
+        mute_time = int(mute_time[:1] * 60)
     elif "h" in mute_time:
-        await asyncio.sleep(int(mute_time[:1]) * 60*60)
+        mute_time = int(mute_time[:1] * 60*60)
     elif "d" in mute_time:
-        await asyncio.sleep(int(mute_time[:1]) * 60*60 * 24)
+        mute_time = int(mute_time[:1] * 60*60 * 24)
 
+    await asyncio.sleep(mute_time)
     await member.remove_roles(mute_role)
 
 
