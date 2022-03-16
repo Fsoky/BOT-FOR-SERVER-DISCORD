@@ -165,7 +165,7 @@ async def mute_user(ctx, member: discord.Member):
 @bot.command(name="join", brief="Подключение к голосовому каналу", usage="join")
 async def join_to_channel(ctx):
     global voice
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     channel = ctx.message.author.voice.channel
 
     if voice and voice.is_connected():
@@ -178,7 +178,7 @@ async def join_to_channel(ctx):
 @bot.command(name="leave", brief="Отключение от голосового канала", usage="leave")
 async def leave_from_channel(ctx):
     global voice
-    voice = discord.utils.get(client.voice_clients, guild=ctx.guild)
+    voice = discord.utils.get(bot.voice_clients, guild=ctx.guild)
     channel = ctx.message.author.voice.channel
 
     if voice and voice.is_connected():
